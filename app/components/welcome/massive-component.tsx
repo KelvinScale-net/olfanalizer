@@ -70,5 +70,7 @@ export const EditBtn = ({ className, onClick }: { className?: string; onClick: (
 }
 
 export const FootLogo = () => (
-  <div className={s.logo} />
+  <a href="https://kelvinscale.net" target="_blank" rel="noopener noreferrer">
+    <div className={s.logo} />
+  </a>
 )

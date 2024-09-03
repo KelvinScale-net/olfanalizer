@@ -7,6 +7,9 @@ import appEn from './lang/app.en'
 import appZh from './lang/app.zh'
 import toolsEn from './lang/tools.en'
 import toolsZh from './lang/tools.zh'
+import appEs from './lang/app.es'
+import commonEs from './lang/common.es'
+import toolsEs from './lang/tools.es'
 import type { Locale } from '.'
 
 const resources = {
@@ -26,13 +29,20 @@ const resources = {
       tools: toolsZh,
     },
   },
+  'es': {
+    translation: {
+      common: commonEs,
+      app: appEs,
+      tools: toolsEs,
+    },
+  },
 }
 
 i18n.use(initReactI18next)
   // init i18next
   // for all options read: https://www.i18next.com/overview/configuration-options
   .init({
-    lng: 'en',
+    lng: 'es',
     fallbackLng: 'en',
     // debug: true,
     resources,
