@@ -14,6 +14,7 @@ import Tooltip from '@/app/components/base/tooltip'
 import WorkflowProcess from '@/app/components/workflow/workflow-process'
 import { Markdown } from '@/app/components/base/markdown'
 import type { Emoji } from '@/types/tools'
+import AppIcon from '../../base/app-icon'
 
 const OperationBtn = ({ innerContent, onClick, className }: { innerContent: React.ReactNode; onClick?: () => void; className?: string }) => (
   <div
@@ -92,7 +93,7 @@ const Answer: FC<IAnswerProps> = ({
     return (
       <Tooltip
         selector={`user-feedback-${randomString(16)}`}
-        content={isLike ? '取消赞同' : '取消反对'}
+        content={isLike ? 'Cancelar "me gusta"' : 'cancelar "no me gusta"'}
       >
         <div
           className={'relative box-border flex items-center justify-center h-7 w-7 p-0.5 rounded-lg bg-white cursor-pointer text-gray-500 hover:text-gray-800'}
@@ -168,11 +169,12 @@ const Answer: FC<IAnswerProps> = ({
   return (
     <div key={id}>
       <div className='flex items-start'>
-        <div className={`${s.answerIcon} w-10 h-10 shrink-0`}>
+      <div className={`${s.answerIcon} w-10 h-10 shrink-0 flex items-center justify-center`}>
           {isResponsing
-            && <div className={s.typeingIcon}>
-              <LoadingAnim type='avatar' />
-            </div>
+            ? <div className={s.typeingIcon}>
+                <LoadingAnim type='avatar' />
+              </div>
+            : <AppIcon size="small" />
           }
         </div>
         <div className={`${s.answerWrap}`}>

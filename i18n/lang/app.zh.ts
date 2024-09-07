@@ -5,10 +5,10 @@ const translation = {
     appUnkonwError: 'La aplicación no está disponible',
   },
   chat: {
-    newChat: 'Nueva conversación',
-    newChatDefaultName: 'Nueva conversación',
+    newChat: 'Nueva consulta',
+    newChatDefaultName: 'Nueva consulta',
     openingStatementTitle: 'Declaración inicial',
-    powerBy: 'Creado por',
+    powerBy: 'Made by: ',
     prompt: 'Indicación',
     privatePromptConfigTitle: 'Configuración de la conversación',
     publicPromptConfigTitle: 'Indicación inicial',
@@ -18,7 +18,7 @@ const translation = {
     startChat: 'Empezar',
     privacyPolicyLeft: 'Por favor, lee la ',
     privacyPolicyMiddle: 'política de privacidad',
-    privacyPolicyRight: ' proporcionada por el desarrollador de la aplicación.',
+    privacyPolicyRight: '.',
   },
   errorMessage: {
     valueOfVarRequired: 'El valor de las variables no puede estar vacío',

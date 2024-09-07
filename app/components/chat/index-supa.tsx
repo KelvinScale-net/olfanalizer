@@ -16,7 +16,8 @@ import ChatImageUploader from '@/app/components/base/image-uploader/chat-image-u
 import ImageList from '@/app/components/base/image-uploader/image-list'
 import { useImageFiles } from '@/app/components/base/image-uploader/hooks'
 
-import autenticar from './auth'
+import { supabase } from './auth'
+import { Session } from '@supabase/supabase-js'
 
 export type IChatProps = {
   chatList: ChatItem[]
@@ -48,9 +49,9 @@ const Chat: FC<IChatProps> = ({
   const isUseInputMethod = useRef(false)
 
   const [query, setQuery] = useState('')
-  const [usuario, setUsuario] = useState('')
+  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [autenticado, setAutenticado] = useState(false)
+  const [session, setSession] = useState<Session | null>(null)
 
   const handleContentChange = (e: any) => {
     const value = e.target.value
@@ -73,6 +74,16 @@ const Chat: FC<IChatProps> = ({
     if (controlClearQuery)
       setQuery('')
   }, [controlClearQuery])
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session)
+    })
+
+    supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session)
+    })
+  }, [])
 
   const {
     files,
@@ -117,36 +128,36 @@ const Chat: FC<IChatProps> = ({
     }
   }
 
-  useEffect(() => {
-    // Verificar si el usuario está autenticado al cargar el componente
-    const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
-    setAutenticado(isAuthenticated);
-  }, []);
-
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
-      const isAuthenticated = await autenticar(usuario, password);
-      if (isAuthenticated) {
-        setAutenticado(true)
-      } else {
-        notify({ type: 'error', message: 'Credenciales incorrectas', duration: 3000 })
-      }
+      const { error } = await supabase.auth.signInWithPassword({
+        email: email,
+        password: password,
+      })
+      if (error) throw error
     } catch (error) {
-      console.error('Error durante la autenticación:', error);
+      console.error('Error durante la autenticación:', error)
       notify({ type: 'error', message: 'Error en la autenticación', duration: 3000 })
     }
   }
 
-  if (!autenticado) {
+  const handleLogout = async () => {
+    const { error } = await supabase.auth.signOut()
+    if (error) {
+      console.error('Error al cerrar sesión:', error)
+    }
+  }
+
+  if (!session) {
     return (
       <div className="flex items-center justify-center h-full">
         <form onSubmit={handleLogin} className="bg-white p-8 rounded-lg shadow-md">
           <input
-            type="text"
-            value={usuario}
-            onChange={(e) => setUsuario(e.target.value)}
-            placeholder="Usuario"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Email"
             required
             className="block w-full px-4 py-2 mb-4 border rounded-md"
           />
@@ -168,6 +179,9 @@ const Chat: FC<IChatProps> = ({
 
   return (
     <div className={cn(!feedbackDisabled && 'px-3.5', 'h-full')}>
+      <button onClick={handleLogout} className="absolute top-4 right-4 px-4 py-2 text-white bg-red-500 rounded-md hover:bg-red-600">
+        Cerrar sesión
+      </button>
       <div className="h-full space-y-[30px]">
         {chatList.map((item) => {
           if (item.isAnswer) {

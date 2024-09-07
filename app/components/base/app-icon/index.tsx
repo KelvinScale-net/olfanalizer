@@ -27,8 +27,8 @@ const AppIcon: FC<AppIconProps> = ({
       style={{
         background,
       }}
-    >
-      🤖
+      >
+      <img src="/logos/icon-logo.png" className="w-full h-full" alt="app icon" />
     </span>
   )
 }
