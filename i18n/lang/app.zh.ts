@@ -16,8 +16,8 @@ const translation = {
     configDisabled:
       'Se han utilizado los ajustes de la sesión anterior para esta sesión.',
     startChat: 'Empezar',
-    privacyPolicyLeft: 'Por favor, lee la ',
-    privacyPolicyMiddle: 'política de privacidad',
+    privacyPolicyLeft: '',
+    privacyPolicyMiddle: 'Política de privacidad',
     privacyPolicyRight: '.',
   },
   errorMessage: {
