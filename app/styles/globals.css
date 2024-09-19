@@ -164,6 +164,12 @@ a.flex.items-center.pr-3.space-x-3 {
   display: none !important;
 }
 
+@media (min-width: 769px) {
+  .pc\:w-\[794px\] {
+    width: 80%;
+  }
+}
+
 /* custon dorado
 .shrink-0.flex.items-center.justify-between.h-12.px-3.bg-gray-100 {
   background: radial-gradient(ellipse farthest-corner at right bottom, #FEDB37 0%, #FDB931 8%, #9f7928 30%, #8A6E2F 40%, transparent 80%),
